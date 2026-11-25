@@ -1,0 +1,1892 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Listening Activity: Subdivisions</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --oxford-blue: #002147;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --bg-color: #f8fafc;
+      --card-bg: #ffffff;
+      --text-color: #1e293b;
+      --border-color: #cbd5e1;
+      --success: #16a34a;
+      --error: #dc2626;
+      --word-chip-bg: #e0f2fe;
+      --word-chip-border: #0284c7;
+      --word-chip-text: #0369a1;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      padding-bottom: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    /* Header Banner */
+    .header-banner {
+      background-color: var(--oxford-blue);
+      color: #ffffff;
+      width: 100%;
+      padding: 28px 20px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      margin-bottom: 24px;
+    }
+
+    .header-title {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      color: #ffffff;
+    }
+
+    .header-subtitle {
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: #93c5fd;
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 920px;
+      width: calc(100% - 32px);
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+    }
+
+    .instruction {
+      font-size: 1.05rem;
+      color: #475569;
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 20px;
+      background: #f1f5f9;
+      padding: 14px;
+      border-radius: 8px;
+      border-left: 5px solid var(--primary);
+    }
+
+    /* Student Info Panel */
+    .info-card {
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 24px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      align-items: center;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .input-group label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #64748b;
+      text-transform: uppercase;
+    }
+
+    .input-group input, .input-group select {
+      padding: 9px 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 0.95rem;
+      outline: none;
+      background-color: #ffffff;
+    }
+
+    .input-group input:focus, .input-group select:focus {
+      border-color: var(--primary);
+    }
+
+    .timer-display {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--primary);
+      background: #eff6ff;
+      padding: 10px 12px;
+      border-radius: 6px;
+      text-align: center;
+      border: 1px solid #bfdbfe;
+    }
+
+    /* Sleek Dark MP3 Audio Player Card */
+    .audio-card {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      border-radius: 14px;
+      overflow: hidden;
+      margin-bottom: 28px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      border: 1px solid #334155;
+      color: #ffffff;
+    }
+
+    .audio-header-info {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding: 18px 22px 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .track-meta {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .track-disc {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #2563eb, #0284c7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.35);
+    }
+
+    .track-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #f8fafc;
+      letter-spacing: 0.3px;
+    }
+
+    .track-artist {
+      font-size: 0.88rem;
+      color: #93c5fd;
+      font-weight: 600;
+    }
+
+    /* Speed Toggle Controls */
+    .speed-controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: #0f172a;
+      padding: 5px;
+      border-radius: 10px;
+      border: 1px solid #334155;
+    }
+
+    .speed-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #94a3b8;
+      text-transform: uppercase;
+      padding: 0 6px;
+    }
+
+    .speed-btn {
+      background: transparent;
+      color: #cbd5e1;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 7px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .speed-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #ffffff;
+    }
+
+    .speed-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.4);
+    }
+
+    .audio-controls-bar {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding: 16px 22px;
+      background: rgba(15, 23, 42, 0.5);
+    }
+
+    .audio-control-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 9px 16px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    .audio-control-btn:hover {
+      background: var(--primary-hover);
+    }
+
+    .audio-control-btn:active {
+      transform: scale(0.97);
+    }
+
+    .audio-control-btn.secondary {
+      background: #334155;
+    }
+
+    .audio-control-btn.secondary:hover {
+      background: #475569;
+    }
+
+    .time-readout {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #cbd5e1;
+      min-width: 96px;
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .seek-slider {
+      flex: 1;
+      min-width: 150px;
+      accent-color: #38bdf8;
+      cursor: pointer;
+      height: 6px;
+    }
+
+    /* Section Header */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--oxford-blue);
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #e2e8f0;
+    }
+
+    .section-tag {
+      background: #dbeafe;
+      color: #1e40af;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    /* Cards Styling */
+    .exercise-card {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 28px;
+    }
+
+    /* Exercise 1: Fill in the Blanks Drag & Drop */
+    .word-bank {
+      background: #f1f5f9;
+      border: 2px dashed #94a3b8;
+      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      min-height: 54px;
+      align-items: center;
+    }
+
+    .lyrics-block {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 18px;
+      line-height: 2.35;
+      font-size: 1.05rem;
+      color: #1e293b;
+    }
+
+    .stanza-spacer {
+      height: 14px;
+    }
+
+    .blank-slot {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 118px;
+      height: 36px;
+      background: #ffffff;
+      border: 2px dashed #94a3b8;
+      border-radius: 20px;
+      vertical-align: middle;
+      margin: 0 4px;
+      padding: 0 6px;
+      transition: all 0.2s;
+    }
+
+    .blank-slot.drag-over {
+      background-color: #e0f2fe;
+      border-color: var(--primary);
+    }
+
+    .blank-slot.correct {
+      border-style: solid;
+      border-color: var(--success);
+      background-color: #f0fdf4;
+    }
+
+    .blank-slot.incorrect {
+      border-style: solid;
+      border-color: var(--error);
+      background-color: #fef2f2;
+    }
+
+    .blank-slot .word-chip {
+      padding: 3px 12px;
+      font-size: 0.92rem;
+      box-shadow: none;
+    }
+
+    /* Exercise 2 & 3: Sentence / Verse Rearrange Drag & Drop */
+    .sentence-item {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 18px;
+    }
+
+    .sentence-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .sentence-label {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #64748b;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Drop Zone Target Area */
+    .sentence-target {
+      min-height: 48px;
+      background: #ffffff;
+      border: 2px dashed #94a3b8;
+      border-radius: 8px;
+      padding: 8px 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 10px;
+      transition: all 0.2s;
+    }
+
+    .sentence-target.vertical-list {
+      flex-direction: column;
+      align-items: stretch;
+      min-height: 120px;
+    }
+
+    .sentence-target.drag-over {
+      background-color: #e0f2fe;
+      border-color: var(--primary);
+    }
+
+    .sentence-target.correct {
+      border-color: var(--success);
+      background-color: #f0fdf4;
+    }
+
+    .sentence-target.incorrect {
+      border-color: var(--error);
+      background-color: #fef2f2;
+    }
+
+    /* Available Chips Source */
+    .sentence-source {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 6px 0;
+      min-height: 38px;
+    }
+
+    .sentence-source.vertical-list {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .word-chip {
+      background-color: var(--word-chip-bg);
+      color: var(--word-chip-text);
+      border: 1px solid var(--word-chip-border);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: grab;
+      user-select: none;
+      transition: transform 0.15s, box-shadow 0.15s, background-color 0.2s;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .verse-chip {
+      border-radius: 10px;
+      padding: 10px 14px;
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    .verse-chip.line-correct {
+      background-color: #dcfce7;
+      border-color: var(--success);
+      color: #166534;
+    }
+
+    .verse-chip.line-incorrect {
+      background-color: #fee2e2;
+      border-color: var(--error);
+      color: #991b1b;
+    }
+
+    .word-chip:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      background-color: #bae6fd;
+    }
+
+    .word-chip.dragging {
+      opacity: 0.4;
+      cursor: grabbing;
+    }
+
+    .word-chip.selected {
+      outline: 3px solid var(--primary);
+      background-color: #7dd3fc;
+    }
+
+    /* Exercise 4: Inline Text Inputs */
+    .ex4-reference-box {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #1e3a8a;
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 18px;
+      font-size: 0.96rem;
+      font-weight: 600;
+      line-height: 1.6;
+    }
+
+    .missing-word-input {
+      width: 135px;
+      padding: 4px 10px;
+      margin: 0 4px;
+      border: 2px solid #94a3b8;
+      border-radius: 8px;
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: #0f172a;
+      background-color: #ffffff;
+      text-align: center;
+      outline: none;
+      transition: all 0.2s;
+    }
+
+    .missing-word-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    }
+
+    .missing-word-input.correct {
+      border-color: var(--success);
+      background-color: #f0fdf4;
+      color: #166534;
+    }
+
+    .missing-word-input.incorrect {
+      border-color: var(--error);
+      background-color: #fef2f2;
+      color: #991b1b;
+    }
+
+    /* Static Chorus Reference Box */
+    .static-lyrics-card {
+      background: #f8fafc;
+      border-left: 5px solid var(--oxford-blue);
+      border-top: 1px solid #e2e8f0;
+      border-right: 1px solid #e2e8f0;
+      border-bottom: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 18px 22px;
+      margin-bottom: 28px;
+      line-height: 1.85;
+      color: #334155;
+      font-size: 1rem;
+    }
+
+    /* Action Buttons */
+    .action-bar {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+    }
+
+    .btn-secondary {
+      background: #64748b;
+      color: white;
+    }
+
+    .btn-secondary:hover {
+      background: #475569;
+    }
+
+    .btn-success {
+      background: var(--success);
+      color: white;
+    }
+
+    .btn-success:hover {
+      background: #15803d;
+    }
+
+    /* Achievements Section */
+    .badge-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .badge-card {
+      border: 2px dashed #cbd5e1;
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+      background: #f8fafc;
+      opacity: 0.5;
+      filter: grayscale(1);
+      transition: all 0.3s ease;
+    }
+
+    .badge-card.unlocked {
+      opacity: 1;
+      filter: grayscale(0);
+      border-style: solid;
+      border-color: #f59e0b;
+      background: #fffbeb;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.15);
+    }
+
+    .badge-icon {
+      font-size: 2.2rem;
+      margin-bottom: 6px;
+    }
+
+    .badge-title {
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: #1e293b;
+    }
+
+    .badge-desc {
+      font-size: 0.78rem;
+      color: #64748b;
+      margin-top: 4px;
+    }
+
+    /* Modal Results */
+    .results-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.65);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      backdrop-filter: blur(4px);
+    }
+
+    .results-content {
+      background: white;
+      padding: 32px;
+      border-radius: 16px;
+      text-align: center;
+      max-width: 520px;
+      width: 90%;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .score-badge {
+      font-size: 2.8rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin: 14px 0;
+    }
+
+    .motivation-msg {
+      font-size: 1.1rem;
+      color: #334155;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    /* Alert Toast Box (No native alert()) */
+    .custom-toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #1e293b;
+      color: #ffffff;
+      padding: 14px 24px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      gap: 10px;
+      border-left: 5px solid #f59e0b;
+    }
+
+    @media (max-width: 600px) {
+      .header-title { font-size: 1.6rem; }
+      .header-subtitle { font-size: 1.05rem; }
+      .container { padding: 16px; }
+      .sentence-target { min-height: 52px; }
+      .missing-word-input { width: 112px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="header-banner">
+  <h1 class="header-title">COLEGIO SAN IGNACIO</h1>
+  <div class="header-subtitle">9th Grade Listening Activity: Subdivisions</div>
+</header>
+
+<div class="container">
+  <div class="instruction">
+    🎵 Listen to the song audio below. Then complete Exercise 1 (Sentence Drag & Drop), Exercise 2 (Sentence Rearrangement), Exercise 3 (Verse Ordering), and Exercise 4 (Fill in the Missing Words) using Tap or Drag & Drop!
+  </div>
+
+  <!-- Student Info Panel -->
+  <div class="info-card">
+    <div class="input-group">
+      <label for="student-course">Class</label>
+      <select id="student-course">
+        <option value="">-- Select Class --</option>
+        <option value="9th grade A">9th grade A</option>
+        <option value="9th grade B">9th grade B</option>
+        <option value="9th grade C">9th grade C</option>
+      </select>
+    </div>
+    <div class="input-group">
+      <label for="student-name">Student</label>
+      <select id="student-name" disabled>
+        <option value="">-- Select name --</option>
+      </select>
+    </div>
+    <div class="input-group">
+      <label for="activity-date">Date</label>
+      <input type="date" id="activity-date">
+    </div>
+    <div class="timer-display" id="timer">Time: 00:00</div>
+  </div>
+
+  <!-- HTML5 MP3 Audio Player Container -->
+  <div class="audio-card">
+    <audio id="main-audio" preload="metadata">
+      <source src="subdivisions.mp3" type="audio/mpeg">
+      Your browser does not support the HTML5 audio element.
+    </audio>
+    <div class="audio-header-info">
+      <div class="track-meta">
+        <div class="track-disc">🎧</div>
+        <div>
+          <div class="track-title">Subdivisions</div>
+          <div class="track-artist">Rush • Audio Track (subdivisions.mp3)</div>
+        </div>
+      </div>
+      <div class="speed-controls" role="group" aria-label="Playback speed">
+        <span class="speed-label">Speed:</span>
+        <button type="button" class="speed-btn active" id="speed-1x" data-rate="1">1x (Normal)</button>
+        <button type="button" class="speed-btn" id="speed-08x" data-rate="0.8">0,8x</button>
+      </div>
+    </div>
+    <div class="audio-controls-bar">
+      <button type="button" class="audio-control-btn" id="audio-play-btn">▶ Play</button>
+      <button type="button" class="audio-control-btn secondary" id="audio-restart-btn">🔄 Restart</button>
+      <input type="range" id="audio-seek" class="seek-slider" value="0" min="0" max="100" step="0.1" aria-label="Seek audio">
+      <span class="time-readout" id="audio-time">00:00 / 00:00</span>
+    </div>
+  </div>
+
+  <!-- EXERCISE 1: Fill in the Blanks (Sentence Drag & Drop) -->
+  <div class="section-header">
+    <span class="section-tag">EXERCISE 1</span>
+    <span>Sentence Drag & Drop: Complete the Lyrics</span>
+  </div>
+
+  <div class="exercise-card" id="ex1-container">
+    <div style="font-size: 0.9rem; font-weight: 700; color: #64748b; margin-bottom: 8px;">Word Bank (Tap or drag words into the blanks):</div>
+    <div class="word-bank" id="ex1-word-bank"></div>
+    <div class="lyrics-block" id="ex1-lyrics"></div>
+  </div>
+
+  <!-- EXERCISE 2: Sentence Rearrange Drag & Drop -->
+  <div class="section-header">
+    <span class="section-tag">EXERCISE 2</span>
+    <span>Rearrange the Words to Form the Sentences of the Song</span>
+  </div>
+
+  <div class="exercise-card" id="rearrange-container">
+    <!-- Sentences generated dynamically by JS -->
+  </div>
+
+  <!-- EXERCISE 3: Rearrange the Verses (Sentence Drag & Drop) -->
+  <div class="section-header">
+    <span class="section-tag">EXERCISE 3</span>
+    <span>Rearrange the Verses in Chronological Order</span>
+  </div>
+
+  <div class="exercise-card" id="verse-order-container">
+    <div class="sentence-label"><span>Drop or tap the verses in the correct chronological order (1 to 6):</span></div>
+    <div class="sentence-target vertical-list" id="ex3-target"></div>
+    <div style="font-size: 0.9rem; font-weight: 700; color: #64748b; margin: 12px 0 6px;">Available Verses:</div>
+    <div class="sentence-source vertical-list" id="ex3-source"></div>
+  </div>
+
+  <!-- EXERCISE 4: Write the Missing Word -->
+  <div class="section-header">
+    <span class="section-tag">EXERCISE 4</span>
+    <span>Write the Missing Word</span>
+  </div>
+
+  <div class="exercise-card" id="ex4-container">
+    <div class="ex4-reference-box">
+      <strong>Word Bank:</strong> lighted, ticking, sell, somewhere, out, rats, desires, lose, start, relax, flight
+    </div>
+    <div class="lyrics-block" id="ex4-lyrics"></div>
+  </div>
+
+  <!-- Sing Along / Listen (Read Only) -->
+  <div class="section-header">
+    <span class="section-tag" style="background:#e2e8f0; color:#334155;">SING ALONG</span>
+    <span>Sing Along / Listen</span>
+  </div>
+
+  <div class="static-lyrics-card">
+    <p>Subdivisions --</p>
+    <p>In the high school halls</p>
+    <p>In the shopping malls</p>
+    <p>Conform or be cast out</p>
+    <p>Subdivisions --</p>
+    <p>In the basement bars</p>
+    <p>In the backs of cars</p>
+    <p>Be cool or be cast out</p>
+    <p>Any escape might help to smooth</p>
+    <p>The unattractive truth</p>
+    <p>But the suburbs have no charms to soothe</p>
+    <p>The restless dreams of youth</p>
+  </div>
+
+  <!-- Achievements Board -->
+  <div class="section-header">
+    <span class="section-tag" style="background:#fef3c7; color:#b45309;">BADGES</span>
+    <span>Achievements & Badges</span>
+  </div>
+  
+  <div class="badge-grid">
+    <div class="badge-card" id="badge-grammar">
+      <div class="badge-icon">🎯</div>
+      <div class="badge-title">Lyric Finder</div>
+      <div class="badge-desc">100% in Exercises 1 & 4 (Missing Words)</div>
+    </div>
+    <div class="badge-card" id="badge-builder">
+      <div class="badge-icon">🧩</div>
+      <div class="badge-title">Sentence & Verse Master</div>
+      <div class="badge-desc">100% in Exercises 2 & 3</div>
+    </div>
+    <div class="badge-card" id="badge-hero">
+      <div class="badge-icon">🏆</div>
+      <div class="badge-title">Listening Superhero</div>
+      <div class="badge-desc">Perfect Score in all 4 activities!</div>
+    </div>
+  </div>
+
+  <br>
+
+  <!-- Action Bar -->
+  <div class="action-bar">
+    <button type="button" class="btn btn-primary" id="check-btn">✔ Check Answers</button>
+    <button type="button" class="btn btn-secondary" id="reset-btn">🔄 Try Again</button>
+    <button type="button" class="btn btn-success" id="download-btn">📥 Download Report</button>
+  </div>
+</div>
+
+<!-- Custom Toast Notification -->
+<div class="custom-toast" id="toast-box"></div>
+
+<!-- Modal Results -->
+<div class="results-modal" id="results-modal">
+  <div class="results-content">
+    <h2 style="font-size: 1.6rem; font-weight: 800; color: var(--oxford-blue);">Activity Summary</h2>
+    <div class="score-badge" id="score-display">0 / 39</div>
+    <p class="motivation-msg" id="motivation-display"></p>
+
+    <div style="background:#f1f5f9; padding: 14px; border-radius: 10px; margin-bottom: 20px; text-align: left; font-size: 0.95rem; line-height: 1.6;">
+      <div><strong>Exercise 1 (Sentence Drag & Drop):</strong> <span id="ex1-score-text">0/13</span></div>
+      <div><strong>Exercise 2 (Rearrange Sentences):</strong> <span id="ex2-score-text">0/9</span></div>
+      <div><strong>Exercise 3 (Rearrange Verses):</strong> <span id="ex3-score-text">0/6</span></div>
+      <div><strong>Exercise 4 (Write Missing Word):</strong> <span id="ex4-score-text">0/11</span></div>
+      <div style="margin-top: 6px; font-weight: 700; color: var(--primary);" id="badges-unlocked-text">Badges Earned: None</div>
+    </div>
+
+    <button type="button" class="btn btn-primary" style="margin: 0 auto;" onclick="closeModal()">Close & Review</button>
+  </div>
+</div>
+
+<script>
+  // Student Database
+  const studentsData = {
+    "9th grade A": [
+      "Acevedo Ponce Felipe Ademar",
+      "Aguilar Becerra Antonia",
+      "Alarcón Quiroz Andrés Felipe",
+      "Alvarado Ortiz Isidora Pilar",
+      "Castillo Turres Catalina Sofía",
+      "Cavieres Pasmino Eloísa Mercedes",
+      "Centonzio Calderón Emily Raffaella",
+      "Contreras San Martín Eva Ignacia",
+      "Figueroa González María Consuelo",
+      "Fuenzalida Parra Pedro",
+      "Galdames Durán Francisca Antonia",
+      "Gatica Knaak Vicente Ignacio",
+      "González Encina Santiago Vicente",
+      "Inzunza Cifuentes Nicolás Guillermo",
+      "Lagos Urra Leticia Carolina",
+      "Mouat Aburto Martina Paz",
+      "Orellana Beltrán Monserrat Francisca",
+      "Ortiz Donoso Matilda Florencia",
+      "Pfeng Gaspar Laura Amalia",
+      "Pinochet Pinochet Alonso Eduardo",
+      "Pinto Bastías Inti Benjamín",
+      "Pizarro Paredes Sofía Ignacia",
+      "Plaza Pereira Martín Alejandro",
+      "Ponce Melero Francisca Ignacia",
+      "Quinteros Mondiglio Raimundo Patricio",
+      "Ramírez Bravo Francisco",
+      "Ramírez Palacios Daniel Esteban",
+      "Rivera Tudela Ignacio Alonso",
+      "Riveros Reveco Amanda",
+      "Rojas Albornoz Benjamín Alejandro",
+      "Rubio Núñez Leonardo Alonso",
+      "Soto Neira Amancay Rocío",
+      "Valdés Velásquez Max Alejandro",
+      "Valencia Zuzunaga Dhiamet Stefan",
+      "Vergara Montenegro Rafaela Sofía",
+      "Vergara Rojas Sofía María Susana",
+      "Vides Correa María Paz",
+      "Zapata Arancibia Agustín Andrés"
+    ],
+    "9th grade B": [
+      "Alarcón Vielma Maximiliano",
+      "Amigo Piceros Amaro Jesús",
+      "Aravena Albornoz Carlos Arturo",
+      "Barrera Jaque Santiago Ernesto",
+      "Carrasco Lazo Emilia Ignacia",
+      "Cornejo Cáceres Laura Elena",
+      "Eyzaguirre Silva Josefa Ignacia",
+      "Farías Andrade Arturo Daniel",
+      "Fonseca Chong Matilda Isidora",
+      "Fredes Silva Martina Sofía",
+      "García Ávila Rafaela Amparo",
+      "García Isla Cristóbal",
+      "Henríquez Miranda Matías Francisco",
+      "Leal Guzmán Álvaro Fernando",
+      "Luengo Valencia Lucas Fabián",
+      "Méndez Sáez Catalina Ignacia",
+      "Mora Palma Victoria Alejandra",
+      "Nilo Miranda Rosario",
+      "Ojeda Vera Joaquín Ignacio",
+      "Olea Solís Eloísa Antonia",
+      "Olivares Fincheira Guillermo Tomás",
+      "Padilla Burchard Felipe Ignacio",
+      "Páez Hidalgo Montserrat Ignacia",
+      "Palacios Solari Javier Agustín",
+      "Quiroz Peña Agustina",
+      "Riveros Álvarez Diego Arturo",
+      "Rojas Edmonds Florencia Antonia Angélica",
+      "San Martín Arias Magdalena Esperanza",
+      "Sánchez Moraga Cristóbal Arturo",
+      "Sarria Astudillo Esteban Alonso",
+      "Stager Aguilera Francisca Emilia",
+      "Valdenegro Román Vicente Maximiliano",
+      "Valderas Ortega Facundo Nicanor",
+      "Valenzuela González José Tomás",
+      "Vermeer Gutiérrez Anouk",
+      "Villagra Alarcón Sofía Antonieta"
+    ],
+    "9th grade C": [
+      "Aburto Romero Diego Esteban",
+      "Araya Escalona María Jesús",
+      "Bravo Zapata Isidora Francisca",
+      "Cáceres Arredondo Isidora Montserrat",
+      "Castillo Reichhardt Valentín",
+      "Espinosa Bravo Carlos Joaquín",
+      "Espinoza Ojeda Camila Ignacia",
+      "Evert Quinteros Alisson Fernanda",
+      "González Marzán Mateo Alfredo",
+      "Hernández Martínez Francisco Javier",
+      "Hiplan Godoy Santino Luis",
+      "Leal Rubio Isidora Ignacia",
+      "Montenegro Ramos Ignacio",
+      "Moya Madero Joaquín Esteban",
+      "Navarro Bravo Amanda Sofía",
+      "Osorio Vivar Víctor André",
+      "Pavez Veliz Clemente",
+      "Pinto Celis Martín Ignacio",
+      "Poblete Espinoza Florencia Antonia",
+      "Prieto Alarcón Mayte Antonia",
+      "Ramírez Ávila Abril Lucía",
+      "Reveco Rojas Ignacia",
+      "Riffo Fernández Agustín Alonso",
+      "Salazar Quiroga Simón Ismael",
+      "Salinas Gómez Isidora Agustina",
+      "Sandoval Acevedo Javiera Ignacia",
+      "Schüller Vásquez Santiago Ernesto",
+      "Seccia Orellana Ignacio Agustín",
+      "Seisdedos Carvajal Loreto Paz",
+      "Solorzano Torres Mateo Gaspar",
+      "Valdés Oyarzún Moira Carolina Denisse",
+      "Veliz Joo Consuelo Alejandra",
+      "Villena Arriagada Javiera Paz",
+      "Zegers Silva Amelia",
+      "Zurita Bustos Franco Salvador"
+    ]
+  };
+
+  // Exercise 1 Data (Lines with words between asterisks - 13 blanks total)
+  const ex1Lines = [
+    "*Sprawling* on the *fringes* of the city",
+    "In *geometric* order",
+    "An *insulated* border",
+    "In between the *bright* lights",
+    "And the far *unlit* unknown",
+    "",
+    "*Growing up* it all seems so *one-sided*",
+    "Opinions *all* provided",
+    "The future *pre-decided*",
+    "Detached and *subdivided*",
+    "In the mass *production* zone",
+    "Nowhere is the *dreamer* or the *misfit* so alone"
+  ];
+
+  // Exercise 2 Data (Rearrange the words to form the sentences of the song - 9 sentences)
+  const sentencesData = [
+    { id: 1, words: ["Subdivisions,", "in", "the high school", "halls"] },
+    { id: 2, words: ["In", "the", "shopping malls"] },
+    { id: 3, words: ["Conform", "or be", "cast out"] },
+    { id: 4, words: ["Subdivisions,", "in", "the basement", "bars"] },
+    { id: 5, words: ["In", "the", "backs", "of cars"] },
+    { id: 6, words: ["Be cool", "or", "be cast out"] },
+    { id: 7, words: ["Any", "escape", "might help", "to smooth", "the", "unattractive", "truth"] },
+    { id: 8, words: ["But", "the", "suburbs", "have", "no charms", "to soothe"] },
+    { id: 9, words: ["The", "restless", "dreams", "of youth"] }
+  ];
+
+  // Exercise 3 Data (Rearrange the verses in chronological order - 6 verses)
+  const versesData = [
+    "Drawn like moths",
+    "we drift into the city",
+    "The timeless old attraction",
+    "Cruising for the action",
+    "Lit up like a firefly",
+    "Just to feel the living night"
+  ];
+
+  // Exercise 4 Data (Write the missing word - 11 blanks)
+  const ex4Lines = [
+    "Some will *sell* their dreams for small *desires*",
+    "Or *lose* the race to *rats*",
+    "Get caught in *ticking* traps",
+    "And *start* to dream of *somewhere*",
+    "To *relax* their restless *flight*",
+    "Somewhere *out* of a memory of *lighted* streets on quiet nights..."
+  ];
+
+  // Global State
+  let timerInterval = null;
+  let secondsElapsed = 0;
+  let isTimerRunning = false;
+  let selectedChip = null;
+  let totalEx1Blanks = 0;
+  let totalEx4Blanks = 0;
+
+  // DOM Elements
+  const timerDisplay = document.getElementById("timer");
+  const dateInput = document.getElementById("activity-date");
+  const courseSelect = document.getElementById("student-course");
+  const nameSelect = document.getElementById("student-name");
+  const rearrangeContainer = document.getElementById("rearrange-container");
+  
+  // Custom HTML5 MP3 Audio Controls
+  const mainAudio = document.getElementById("main-audio");
+  const audioPlayBtn = document.getElementById("audio-play-btn");
+  const audioRestartBtn = document.getElementById("audio-restart-btn");
+  const audioSeek = document.getElementById("audio-seek");
+  const audioTime = document.getElementById("audio-time");
+  const speed1xBtn = document.getElementById("speed-1x");
+  const speed08xBtn = document.getElementById("speed-08x");
+
+  // Set Default Date
+  dateInput.valueAsDate = new Date();
+
+  // Custom Toast Message Helper
+  function showToast(message) {
+    const toast = document.getElementById("toast-box");
+    toast.textContent = message;
+    toast.style.display = "flex";
+    setTimeout(() => {
+      toast.style.display = "none";
+    }, 4000);
+  }
+
+  // MP3 Audio Controls & Speed Logic
+  audioPlayBtn.addEventListener("click", () => {
+    startTimer();
+    if (mainAudio.paused) {
+      mainAudio.play().catch(() => {
+        showToast("⚠️ Could not play subdivisions.mp3. Ensure the MP3 file is in the same folder.");
+      });
+      audioPlayBtn.textContent = "⏸ Pause";
+    } else {
+      mainAudio.pause();
+      audioPlayBtn.textContent = "▶ Play";
+    }
+  });
+
+  audioRestartBtn.addEventListener("click", () => {
+    startTimer();
+    mainAudio.currentTime = 0;
+    mainAudio.play().catch(() => {
+      showToast("⚠️ Could not play subdivisions.mp3. Ensure the MP3 file is in the same folder.");
+    });
+    audioPlayBtn.textContent = "⏸ Pause";
+  });
+
+  mainAudio.addEventListener("ended", () => {
+    audioPlayBtn.textContent = "▶ Play";
+  });
+
+  mainAudio.addEventListener("loadedmetadata", () => {
+    if (!isNaN(mainAudio.duration)) {
+      audioTime.textContent = `00:00 / ${formatTime(mainAudio.duration)}`;
+    }
+  });
+
+  mainAudio.addEventListener("timeupdate", () => {
+    if (!isNaN(mainAudio.duration) && mainAudio.duration > 0) {
+      const pct = (mainAudio.currentTime / mainAudio.duration) * 100;
+      audioSeek.value = pct;
+      audioTime.textContent = `${formatTime(mainAudio.currentTime)} / ${formatTime(mainAudio.duration)}`;
+    }
+  });
+
+  audioSeek.addEventListener("input", () => {
+    if (!isNaN(mainAudio.duration) && mainAudio.duration > 0) {
+      mainAudio.currentTime = (audioSeek.value / 100) * mainAudio.duration;
+    }
+  });
+
+  function setPlaybackSpeed(rate) {
+    mainAudio.playbackRate = rate;
+    if (rate === 1) {
+      speed1xBtn.classList.add("active");
+      speed08xBtn.classList.remove("active");
+    } else {
+      speed08xBtn.classList.add("active");
+      speed1xBtn.classList.remove("active");
+    }
+  }
+
+  speed1xBtn.addEventListener("click", () => setPlaybackSpeed(1));
+  speed08xBtn.addEventListener("click", () => setPlaybackSpeed(0.8));
+
+  function formatTime(secs) {
+    const m = Math.floor(secs / 60);
+    const s = Math.floor(secs % 60);
+    return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+  }
+
+  // Populate Student Dropdown
+  courseSelect.addEventListener("change", () => {
+    const selectedCourse = courseSelect.value;
+    nameSelect.innerHTML = "";
+
+    if (selectedCourse && studentsData[selectedCourse]) {
+      nameSelect.disabled = false;
+      const defaultOpt = document.createElement("option");
+      defaultOpt.value = "";
+      defaultOpt.textContent = "-- Select Student Name --";
+      nameSelect.appendChild(defaultOpt);
+
+      studentsData[selectedCourse].forEach(student => {
+        const opt = document.createElement("option");
+        opt.value = student;
+        opt.textContent = student;
+        nameSelect.appendChild(opt);
+      });
+    } else {
+      nameSelect.disabled = true;
+      const defaultOpt = document.createElement("option");
+      defaultOpt.value = "";
+      defaultOpt.textContent = "-- Select course first --";
+      nameSelect.appendChild(defaultOpt);
+    }
+  });
+
+  // Timer Controls
+  function startTimer() {
+    if (!isTimerRunning) {
+      isTimerRunning = true;
+      timerInterval = setInterval(() => {
+        secondsElapsed++;
+        const mins = String(Math.floor(secondsElapsed / 60)).padStart(2, '0');
+        const secs = String(secondsElapsed % 60).padStart(2, '0');
+        timerDisplay.textContent = `Time: ${mins}:${secs}`;
+      }, 1000);
+    }
+  }
+
+  function stopTimer() {
+    clearInterval(timerInterval);
+    isTimerRunning = false;
+  }
+
+  function resetTimer() {
+    stopTimer();
+    secondsElapsed = 0;
+    timerDisplay.textContent = "Time: 00:00";
+  }
+
+  // Shuffle Array
+  function shuffle(array) {
+    let arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  function clearSelectedChip() {
+    if (selectedChip) {
+      selectedChip.classList.remove("selected");
+      selectedChip = null;
+    }
+  }
+
+  // ==========================================
+  // BUILD EXERCISE 1: Fill in the Blanks
+  // ==========================================
+  function buildExercise1() {
+    const wordBank = document.getElementById("ex1-word-bank");
+    const lyricsDiv = document.getElementById("ex1-lyrics");
+    wordBank.innerHTML = "";
+    lyricsDiv.innerHTML = "";
+
+    let extractedWords = [];
+    let blankCounter = 0;
+
+    ex1Lines.forEach((line) => {
+      if (line === "") {
+        const spacer = document.createElement("div");
+        spacer.className = "stanza-spacer";
+        lyricsDiv.appendChild(spacer);
+        return;
+      }
+
+      const p = document.createElement("p");
+      const parts = line.split(/\*([^*]+)\*/g);
+
+      parts.forEach((part, idx) => {
+        if (idx % 2 === 1) {
+          blankCounter++;
+          extractedWords.push(part);
+
+          const slot = document.createElement("span");
+          slot.className = "blank-slot";
+          slot.dataset.blankId = blankCounter;
+          slot.dataset.expected = part;
+
+          slot.addEventListener("dragover", (e) => {
+            e.preventDefault();
+            slot.classList.add("drag-over");
+          });
+          slot.addEventListener("dragleave", () => {
+            slot.classList.remove("drag-over");
+          });
+          slot.addEventListener("drop", (e) => {
+            e.preventDefault();
+            slot.classList.remove("drag-over");
+            const chipId = e.dataTransfer.getData("text/plain");
+            const chip = document.getElementById(chipId);
+            if (chip && chip.dataset.group === "ex1") {
+              if (slot.firstChild) {
+                wordBank.appendChild(slot.firstChild);
+              }
+              slot.appendChild(chip);
+              startTimer();
+            }
+          });
+          slot.addEventListener("click", () => {
+            startTimer();
+            if (selectedChip && selectedChip.dataset.group === "ex1") {
+              if (slot.firstChild && slot.firstChild !== selectedChip) {
+                wordBank.appendChild(slot.firstChild);
+              }
+              slot.appendChild(selectedChip);
+              clearSelectedChip();
+            }
+          });
+
+          p.appendChild(slot);
+        } else {
+          p.appendChild(document.createTextNode(part));
+        }
+      });
+
+      lyricsDiv.appendChild(p);
+    });
+
+    totalEx1Blanks = blankCounter;
+
+    // Word Bank events
+    wordBank.addEventListener("dragover", (e) => e.preventDefault());
+    wordBank.addEventListener("drop", (e) => {
+      e.preventDefault();
+      const chipId = e.dataTransfer.getData("text/plain");
+      const chip = document.getElementById(chipId);
+      if (chip && chip.dataset.group === "ex1") {
+        wordBank.appendChild(chip);
+        startTimer();
+      }
+    });
+    wordBank.addEventListener("click", () => {
+      startTimer();
+      if (selectedChip && selectedChip.dataset.group === "ex1") {
+        wordBank.appendChild(selectedChip);
+        clearSelectedChip();
+      }
+    });
+
+    // Populate shuffled chips
+    const shuffled = shuffle(extractedWords);
+    shuffled.forEach((word, idx) => {
+      const chip = document.createElement("div");
+      chip.className = "word-chip";
+      chip.textContent = word;
+      chip.draggable = true;
+      chip.id = `ex1-chip-${idx}`;
+      chip.dataset.group = "ex1";
+      chip.dataset.word = word;
+
+      chip.addEventListener("dragstart", (e) => {
+        startTimer();
+        chip.classList.add("dragging");
+        e.dataTransfer.setData("text/plain", chip.id);
+      });
+      chip.addEventListener("dragend", () => {
+        chip.classList.remove("dragging");
+      });
+      chip.addEventListener("click", (e) => {
+        e.stopPropagation();
+        startTimer();
+        if (selectedChip === chip) {
+          clearSelectedChip();
+        } else {
+          clearSelectedChip();
+          selectedChip = chip;
+          chip.classList.add("selected");
+        }
+      });
+
+      wordBank.appendChild(chip);
+    });
+  }
+
+  // ==========================================
+  // BUILD EXERCISE 2: Rearrange Words per Line
+  // ==========================================
+  function buildRearrangeExercise() {
+    rearrangeContainer.innerHTML = "";
+
+    sentencesData.forEach((s) => {
+      const item = document.createElement("div");
+      item.className = "sentence-item";
+
+      const label = document.createElement("div");
+      label.className = "sentence-label";
+      label.innerHTML = `<span>Sentence ${s.id}:</span>`;
+
+      const target = document.createElement("div");
+      target.className = "sentence-target";
+      target.dataset.sentenceId = s.id;
+      target.dataset.expected = s.words.join(" ");
+
+      target.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        target.classList.add("drag-over");
+      });
+      target.addEventListener("dragleave", () => {
+        target.classList.remove("drag-over");
+      });
+      target.addEventListener("drop", (e) => {
+        e.preventDefault();
+        target.classList.remove("drag-over");
+        const chipId = e.dataTransfer.getData("text/plain");
+        const chip = document.getElementById(chipId);
+        if (chip && chip.dataset.group === "ex2" && chip.dataset.sentenceId == s.id) {
+          target.appendChild(chip);
+          startTimer();
+        }
+      });
+      target.addEventListener("click", () => {
+        startTimer();
+        if (selectedChip && selectedChip.dataset.group === "ex2" && selectedChip.dataset.sentenceId == s.id) {
+          target.appendChild(selectedChip);
+          clearSelectedChip();
+        }
+      });
+
+      const source = document.createElement("div");
+      source.className = "sentence-source";
+      source.dataset.sentenceId = s.id;
+
+      source.addEventListener("dragover", (e) => e.preventDefault());
+      source.addEventListener("drop", (e) => {
+        e.preventDefault();
+        const chipId = e.dataTransfer.getData("text/plain");
+        const chip = document.getElementById(chipId);
+        if (chip && chip.dataset.group === "ex2" && chip.dataset.sentenceId == s.id) {
+          source.appendChild(chip);
+          startTimer();
+        }
+      });
+      source.addEventListener("click", () => {
+        startTimer();
+        if (selectedChip && selectedChip.dataset.group === "ex2" && selectedChip.dataset.sentenceId == s.id) {
+          source.appendChild(selectedChip);
+          clearSelectedChip();
+        }
+      });
+
+      const shuffledWords = shuffle(s.words);
+      shuffledWords.forEach((w, idx) => {
+        const chip = document.createElement("div");
+        chip.className = "word-chip";
+        chip.textContent = w;
+        chip.draggable = true;
+        chip.id = `chip-s${s.id}-${idx}`;
+        chip.dataset.group = "ex2";
+        chip.dataset.sentenceId = s.id;
+        chip.dataset.word = w;
+
+        chip.addEventListener("dragstart", (e) => {
+          startTimer();
+          chip.classList.add("dragging");
+          e.dataTransfer.setData("text/plain", chip.id);
+        });
+        chip.addEventListener("dragend", () => {
+          chip.classList.remove("dragging");
+        });
+        chip.addEventListener("click", (e) => {
+          e.stopPropagation();
+          startTimer();
+          if (selectedChip === chip) {
+            clearSelectedChip();
+          } else {
+            clearSelectedChip();
+            selectedChip = chip;
+            chip.classList.add("selected");
+          }
+        });
+
+        source.appendChild(chip);
+      });
+
+      item.appendChild(label);
+      item.appendChild(target);
+      item.appendChild(source);
+      rearrangeContainer.appendChild(item);
+    });
+  }
+
+  // ==========================================
+  // BUILD EXERCISE 3: Rearrange the Verses
+  // ==========================================
+  function buildExercise3() {
+    const target = document.getElementById("ex3-target");
+    const source = document.getElementById("ex3-source");
+    target.innerHTML = "";
+    source.innerHTML = "";
+
+    target.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      target.classList.add("drag-over");
+    });
+    target.addEventListener("dragleave", () => {
+      target.classList.remove("drag-over");
+    });
+    target.addEventListener("drop", (e) => {
+      e.preventDefault();
+      target.classList.remove("drag-over");
+      const chipId = e.dataTransfer.getData("text/plain");
+      const chip = document.getElementById(chipId);
+      if (chip && chip.dataset.group === "ex3") {
+        target.appendChild(chip);
+        startTimer();
+      }
+    });
+    target.addEventListener("click", () => {
+      startTimer();
+      if (selectedChip && selectedChip.dataset.group === "ex3") {
+        target.appendChild(selectedChip);
+        clearSelectedChip();
+      }
+    });
+
+    source.addEventListener("dragover", (e) => e.preventDefault());
+    source.addEventListener("drop", (e) => {
+      e.preventDefault();
+      const chipId = e.dataTransfer.getData("text/plain");
+      const chip = document.getElementById(chipId);
+      if (chip && chip.dataset.group === "ex3") {
+        source.appendChild(chip);
+        startTimer();
+      }
+    });
+    source.addEventListener("click", () => {
+      startTimer();
+      if (selectedChip && selectedChip.dataset.group === "ex3") {
+        source.appendChild(selectedChip);
+        clearSelectedChip();
+      }
+    });
+
+    const indexedVerses = versesData.map((text, index) => ({ text, correctIndex: index }));
+    const shuffledVerses = shuffle(indexedVerses);
+
+    shuffledVerses.forEach((v, idx) => {
+      const chip = document.createElement("div");
+      chip.className = "word-chip verse-chip";
+      chip.textContent = v.text;
+      chip.draggable = true;
+      chip.id = `ex3-chip-${idx}`;
+      chip.dataset.group = "ex3";
+      chip.dataset.correctIndex = v.correctIndex;
+      chip.dataset.verseText = v.text;
+
+      chip.addEventListener("dragstart", (e) => {
+        startTimer();
+        chip.classList.add("dragging");
+        e.dataTransfer.setData("text/plain", chip.id);
+      });
+      chip.addEventListener("dragend", () => {
+        chip.classList.remove("dragging");
+      });
+      chip.addEventListener("click", (e) => {
+        e.stopPropagation();
+        startTimer();
+        if (selectedChip === chip) {
+          clearSelectedChip();
+        } else {
+          clearSelectedChip();
+          selectedChip = chip;
+          chip.classList.add("selected");
+        }
+      });
+
+      source.appendChild(chip);
+    });
+  }
+
+  // ==========================================
+  // BUILD EXERCISE 4: Write the Missing Word
+  // ==========================================
+  function buildExercise4() {
+    const lyricsDiv = document.getElementById("ex4-lyrics");
+    lyricsDiv.innerHTML = "";
+    let blankCounter = 0;
+
+    ex4Lines.forEach((line) => {
+      const p = document.createElement("p");
+      const parts = line.split(/\*([^*]+)\*/g);
+
+      parts.forEach((part, idx) => {
+        if (idx % 2 === 1) {
+          blankCounter++;
+          const input = document.createElement("input");
+          input.type = "text";
+          input.className = "missing-word-input";
+          input.placeholder = `(${blankCounter})`;
+          input.autocomplete = "off";
+          input.spellcheck = false;
+          input.dataset.blankId = blankCounter;
+          input.dataset.expected = part;
+
+          input.addEventListener("input", () => {
+            startTimer();
+            input.classList.remove("correct", "incorrect");
+          });
+
+          p.appendChild(input);
+        } else {
+          p.appendChild(document.createTextNode(part));
+        }
+      });
+
+      lyricsDiv.appendChild(p);
+    });
+
+    totalEx4Blanks = blankCounter;
+  }
+
+  // ==========================================
+  // CHECK ANSWERS LOGIC
+  // ==========================================
+  document.getElementById("check-btn").addEventListener("click", () => {
+    stopTimer();
+    clearSelectedChip();
+
+    // Evaluate Exercise 1
+    let ex1Score = 0;
+    document.querySelectorAll(".blank-slot").forEach(slot => {
+      const placedChip = slot.querySelector(".word-chip");
+      const expected = slot.dataset.expected;
+
+      if (placedChip && placedChip.dataset.word === expected) {
+        ex1Score++;
+        slot.classList.add("correct");
+        slot.classList.remove("incorrect");
+      } else {
+        slot.classList.add("incorrect");
+        slot.classList.remove("correct");
+      }
+    });
+
+    // Evaluate Exercise 2
+    let ex2Score = 0;
+    document.querySelectorAll("#rearrange-container .sentence-target").forEach(target => {
+      const placedChips = [...target.querySelectorAll(".word-chip")];
+      const userSentence = placedChips.map(c => c.dataset.word).join(" ");
+      const expectedSentence = target.dataset.expected;
+
+      if (userSentence === expectedSentence) {
+        ex2Score++;
+        target.classList.add("correct");
+        target.classList.remove("incorrect");
+      } else {
+        target.classList.add("incorrect");
+        target.classList.remove("correct");
+      }
+    });
+
+    // Evaluate Exercise 3
+    let ex3Score = 0;
+    const ex3Target = document.getElementById("ex3-target");
+    const placedVerses = [...ex3Target.querySelectorAll(".verse-chip")];
+
+    placedVerses.forEach((chip, positionIdx) => {
+      if (parseInt(chip.dataset.correctIndex, 10) === positionIdx) {
+        ex3Score++;
+        chip.classList.add("line-correct");
+        chip.classList.remove("line-incorrect");
+      } else {
+        chip.classList.add("line-incorrect");
+        chip.classList.remove("line-correct");
+      }
+    });
+
+    if (ex3Score === versesData.length) {
+      ex3Target.classList.add("correct");
+      ex3Target.classList.remove("incorrect");
+    } else {
+      ex3Target.classList.add("incorrect");
+      ex3Target.classList.remove("correct");
+    }
+
+    // Evaluate Exercise 4
+    let ex4Score = 0;
+    document.querySelectorAll(".missing-word-input").forEach(input => {
+      const userVal = input.value.trim().toLowerCase();
+      const expectedVal = input.dataset.expected.trim().toLowerCase();
+
+      if (userVal !== "" && userVal === expectedVal) {
+        ex4Score++;
+        input.classList.add("correct");
+        input.classList.remove("incorrect");
+      } else {
+        input.classList.add("incorrect");
+        input.classList.remove("correct");
+      }
+    });
+
+    const maxScore = totalEx1Blanks + sentencesData.length + versesData.length + totalEx4Blanks;
+    const totalScore = ex1Score + ex2Score + ex3Score + ex4Score;
+
+    // Badges Update
+    const grammarBadge = document.getElementById("badge-grammar");
+    const builderBadge = document.getElementById("badge-builder");
+    const heroBadge = document.getElementById("badge-hero");
+
+    let unlockedCount = 0;
+
+    if (ex1Score === totalEx1Blanks && ex4Score === totalEx4Blanks) {
+      grammarBadge.classList.add("unlocked");
+      unlockedCount++;
+    } else {
+      grammarBadge.classList.remove("unlocked");
+    }
+
+    if (ex2Score === sentencesData.length && ex3Score === versesData.length) {
+      builderBadge.classList.add("unlocked");
+      unlockedCount++;
+    } else {
+      builderBadge.classList.remove("unlocked");
+    }
+
+    if (totalScore === maxScore) {
+      heroBadge.classList.add("unlocked");
+      unlockedCount++;
+    } else {
+      heroBadge.classList.remove("unlocked");
+    }
+
+    // Modal UI Updates
+    document.getElementById("score-display").textContent = `${totalScore} / ${maxScore}`;
+    document.getElementById("ex1-score-text").textContent = `${ex1Score} / ${totalEx1Blanks}`;
+    document.getElementById("ex2-score-text").textContent = `${ex2Score} / ${sentencesData.length}`;
+    document.getElementById("ex3-score-text").textContent = `${ex3Score} / ${versesData.length}`;
+    document.getElementById("ex4-score-text").textContent = `${ex4Score} / ${totalEx4Blanks}`;
+
+    const badgesText = unlockedCount > 0 ? `${unlockedCount} Badge(s) Unlocked! 🏅` : "None";
+    document.getElementById("badges-unlocked-text").textContent = `Badges Earned: ${badgesText}`;
+
+    const motivationDisplay = document.getElementById("motivation-display");
+
+    if (totalScore === maxScore) {
+      motivationDisplay.innerHTML = "🎉 <strong>Outstanding!</strong> Perfect score! You have mastered the lyrics of <em>Subdivisions</em>!";
+    } else if (totalScore >= Math.round(maxScore * 0.75)) {
+      motivationDisplay.innerHTML = "🌟 <strong>Great job!</strong> You did very well! Review your answers and try again to unlock all badges!";
+    } else if (totalScore >= Math.round(maxScore * 0.5)) {
+      motivationDisplay.innerHTML = "👍 <strong>Good effort!</strong> Re-play the song audio (try 0,8x speed if needed) and fix the highlighted items.";
+    } else {
+      motivationDisplay.innerHTML = "💪 <strong>Keep practicing!</strong> Listen to the audio track again and complete all four exercises carefully!";
+    }
+
+    document.getElementById("results-modal").style.display = "flex";
+  });
+
+  function closeModal() {
+    document.getElementById("results-modal").style.display = "none";
+  }
+
+  // Reset Button
+  document.getElementById("reset-btn").addEventListener("click", () => {
+    resetTimer();
+    clearSelectedChip();
+
+    // Reset Badges
+    document.querySelectorAll('.badge-card').forEach(b => b.classList.remove('unlocked'));
+
+    // Reset Ex 3 target border
+    const ex3Target = document.getElementById("ex3-target");
+    ex3Target.classList.remove("correct", "incorrect");
+
+    // Rebuild all exercises
+    buildExercise1();
+    buildRearrangeExercise();
+    buildExercise3();
+    buildExercise4();
+  });
+
+  // Download Report
+  document.getElementById("download-btn").addEventListener("click", () => {
+    const studentCourse = courseSelect.value;
+    const studentName = nameSelect.value;
+
+    if (!studentCourse || !studentName) {
+      showToast("⚠️ Debes seleccionar tu Curso y Nombre de estudiante de la lista antes de descargar el informe.");
+      return;
+    }
+
+    const date = dateInput.value || "N/A";
+    const timeSpent = timerDisplay.textContent.replace("Time: ", "");
+
+    let ex1Score = 0;
+    let ex1Details = "";
+    document.querySelectorAll(".blank-slot").forEach((slot, idx) => {
+      const placedChip = slot.querySelector(".word-chip");
+      const userVal = placedChip ? placedChip.dataset.word : "EMPTY";
+      const expected = slot.dataset.expected;
+      const isCorrect = userVal === expected;
+      if (isCorrect) ex1Score++;
+      ex1Details += `  Blank #${idx + 1}: Placed = "${userVal}" | Expected = "${expected}" [${isCorrect ? 'CORRECT' : 'INCORRECT'}]\n`;
+    });
+
+    let ex2Score = 0;
+    let ex2Details = "";
+    document.querySelectorAll("#rearrange-container .sentence-target").forEach((target, idx) => {
+      const placedChips = [...target.querySelectorAll(".word-chip")];
+      const userSentence = placedChips.map(c => c.dataset.word).join(" ");
+      const expectedSentence = target.dataset.expected;
+      const isCorrect = userSentence === expectedSentence;
+      if (isCorrect) ex2Score++;
+      ex2Details += `  Sentence #${idx + 1}: Built = "${userSentence || 'EMPTY'}" | Expected = "${expectedSentence}" [${isCorrect ? 'CORRECT' : 'INCORRECT'}]\n`;
+    });
+
+    let ex3Score = 0;
+    let ex3Details = "";
+    const placedVerses = [...document.querySelectorAll("#ex3-target .verse-chip")];
+    versesData.forEach((expectedVerse, idx) => {
+      const chip = placedVerses[idx];
+      const userVerse = chip ? chip.dataset.verseText : "EMPTY";
+      const isCorrect = chip && parseInt(chip.dataset.correctIndex, 10) === idx;
+      if (isCorrect) ex3Score++;
+      ex3Details += `  Position #${idx + 1}: Placed = "${userVerse}" | Expected = "${expectedVerse}" [${isCorrect ? 'CORRECT' : 'INCORRECT'}]\n`;
+    });
+
+    let ex4Score = 0;
+    let ex4Details = "";
+    document.querySelectorAll(".missing-word-input").forEach((input, idx) => {
+      const userVal = input.value.trim();
+      const expected = input.dataset.expected;
+      const isCorrect = userVal.toLowerCase() === expected.toLowerCase();
+      if (isCorrect) ex4Score++;
+      ex4Details += `  Word #${idx + 1}: Typed = "${userVal || 'EMPTY'}" | Expected = "${expected}" [${isCorrect ? 'CORRECT' : 'INCORRECT'}]\n`;
+    });
+
+    const maxScore = totalEx1Blanks + sentencesData.length + versesData.length + totalEx4Blanks;
+    const totalScore = ex1Score + ex2Score + ex3Score + ex4Score;
+
+    const reportContent = `================================================
+COLEGIO SAN IGNACIO
+LISTENING COMPREHENSION REPORT: SUBDIVISIONS
+================================================
+Estudiante    : ${studentName}
+Curso / Grade : ${studentCourse}
+Fecha         : ${date}
+Tiempo Usado  : ${timeSpent}
+Puntaje Total : ${totalScore} / ${maxScore} (${Math.round((totalScore/maxScore)*100)}%)
+- Ex 1 (Sentence Drag & Drop) : ${ex1Score} / ${totalEx1Blanks}
+- Ex 2 (Rearrange Sentences)  : ${ex2Score} / ${sentencesData.length}
+- Ex 3 (Rearrange Verses)     : ${ex3Score} / ${versesData.length}
+- Ex 4 (Write Missing Word)   : ${ex4Score} / ${totalEx4Blanks}
+================================================
+
+EXERCISE 1 BREAKDOWN (SENTENCE DRAG & DROP):
+------------------------------------------------
+${ex1Details}
+EXERCISE 2 BREAKDOWN (SENTENCE REARRANGEMENT):
+------------------------------------------------
+${ex2Details}
+EXERCISE 3 BREAKDOWN (VERSE ORDERING):
+------------------------------------------------
+${ex3Details}
+EXERCISE 4 BREAKDOWN (WRITE THE MISSING WORD):
+------------------------------------------------
+${ex4Details}================================================
+`;
+
+    const blob = new Blob([reportContent], { type: "text/plain;charset=utf-8" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = `Reporte_Listening_Subdivisions_${studentName.replace(/\s+/g, '_')}_${studentCourse.replace(/\s+/g, '_')}.txt`;
+    link.click();
+  });
+
+  // Init Exercises on load
+  buildExercise1();
+  buildRearrangeExercise();
+  buildExercise3();
+  buildExercise4();
+</script>
+
+</body>
+</html>
